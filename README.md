@@ -9,35 +9,46 @@ Google Sheets content calendar → Photoshop template stills for hotel social (t
 
 ## Quick start (no terminal required)
 
+Works on **Windows** and **Mac** — use the matching double-click launcher below.
+
 ### What you need
 
 | App | Notes |
 |-----|--------|
-| **Node.js LTS** | Only if setup.bat says it is missing — install from [nodejs.org](https://nodejs.org/en/download), defaults are fine |
+| **Node.js LTS** | Only if setup says it is missing — install from [nodejs.org](https://nodejs.org/en/download), defaults are fine |
 | **Adobe Photoshop** | 2023 or newer |
 | **Adobe UXP Developer Tools** | From Creative Cloud (free companion for loading panels) |
 | **This repo folder** | Cloned or downloaded from GitHub |
 
+### Launchers
+
+| Step | Windows | Mac |
+|------|---------|-----|
+| Install / build | Double-click **`setup.bat`** | Double-click **`setup.command`** |
+| Open Photoshop + panel | Double-click **`open-photoshop.bat`** | Double-click **`open-photoshop.command`** |
+
+**Mac tip:** If Finder says the file can’t be opened, **right-click → Open → Open** once (Gatekeeper). After that, normal double-click works.
+
 ### 1) One-click install
 
-1. Open this project folder in File Explorer.
-2. Double-click **`setup.bat`**.
+1. Open this project folder in File Explorer (Windows) or Finder (Mac).
+2. Double-click **`setup.bat`** (Windows) or **`setup.command`** (Mac).
 3. Wait until it says **Setup complete** (first run may take a few minutes).
-4. Press any key to close the window.
+4. Press a key / Enter to close the window.
 
 That installs packages, builds the project, creates `.env.local`, and generates the templater test dataset.
 
 ### 2) Open Photoshop + load the panel
 
-1. Double-click **`open-photoshop.bat`**.
+1. Double-click **`open-photoshop.bat`** (Windows) or **`open-photoshop.command`** (Mac).
 2. Photoshop and UXP Developer Tools open.
 3. The plugin folder path is **copied to your clipboard**.
 4. In **UXP Developer Tools**:
    - Turn on **Developer Mode** (gear).
-   - **Add Plugin** → paste / select the clipboard path (`…\packages\uxp-plugin`).
+   - **Add Plugin** → paste / select the clipboard path (`…/packages/uxp-plugin`).
    - **Load** / **Watch** against Photoshop.
 5. In Photoshop: **Plugins → P10 Templater**.
-6. In the panel, click **Repo folder…** and choose this project folder (the folder that contains `setup.bat`).
+6. In the panel, click **Repo folder…** and choose this project folder (the folder that contains `setup.bat` / `setup.command`).
 7. Click **Pull Content_DB**, pick a row, then **Apply this row**.
 
 You should see headline/copy and background updates on the open template.
@@ -52,7 +63,13 @@ You should see headline/copy and background updates on the open template.
 
 **Sheet sharing:** the panel reads Content_DB via CSV export — share the spreadsheet as **Anyone with the link → Viewer** (or grant Viewer to your account).
 
-More detail: [docs/operator-guide.md](docs/operator-guide.md).
+More detail: [docs/quickstart.md](docs/quickstart.md) · [docs/operator-guide.md](docs/operator-guide.md).
+
+---
+
+## Clone note (templates via Git LFS)
+
+Photoshop fixtures are stored with **Git LFS**. After clone, if `.psd` files are tiny pointer files, run `git lfs pull`. [GitHub Desktop](https://desktop.github.com/) clones LFS assets automatically.
 
 ---
 
@@ -83,7 +100,7 @@ Templates live under `fixtures/templater/templates/`. If they are missing after 
 
 ## Verify install (optional)
 
-Double-click **`setup.bat`** again anytime — it is safe to re-run.
+Double-click **`setup.bat`** / **`setup.command`** again anytime — it is safe to re-run.
 
 If you prefer a terminal check:
 
@@ -111,6 +128,7 @@ npm run render -- --id Q1_W1_01 --dry-run
 
 | Doc | Audience |
 |-----|----------|
+| [docs/quickstart.md](docs/quickstart.md) | First install (Windows + Mac) |
 | [docs/operator-guide.md](docs/operator-guide.md) | Daily Sheets → panel flow |
 | [docs/designer-guide.md](docs/designer-guide.md) | Automation-ready PSD layer schema |
 | [docs/e2e-smoke-checklist.md](docs/e2e-smoke-checklist.md) | Smoke test after changes |

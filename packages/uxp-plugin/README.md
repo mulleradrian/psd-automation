@@ -18,6 +18,17 @@ No handshake queue. No JSON job dump in your face.
 
 ## First-time setup
 
+Prefer the repo root launchers (no typing):
+
+| | Windows | Mac |
+|---|---------|-----|
+| Install | `setup.bat` | `setup.command` |
+| Open Photoshop + UXP | `open-photoshop.bat` | `open-photoshop.command` |
+
+That builds the project and copies the plugin path to the clipboard. See [docs/quickstart.md](../../docs/quickstart.md).
+
+Manual / advanced:
+
 ```bash
 # 1) Build the test dataset (64 rows: 4 ratios × 4 BGs × 4 copy variants)
 node scripts/generate-templater-dataset.mjs
@@ -30,7 +41,7 @@ node scripts/generate-templater-dataset.mjs
 
 ## Load the panel
 
-1. UXP Developer Tool → **Add Plugin** → `packages/uxp-plugin`
+1. Run **open-photoshop** (or UXP Developer Tool → **Add Plugin** → `packages/uxp-plugin`)
 2. Photoshop → Plugins → **P10 Templater**
 3. **Pull Content_DB** (sheet must be shared Viewer). Open a ratio PSD, or set **Repo folder…** to auto-open templates.
 4. Cycle rows → **Apply**

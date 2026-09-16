@@ -1,5 +1,11 @@
 # Operator guide — Perfect Ten hybrid flow
 
+## First-time machine setup
+
+Follow [quickstart.md](./quickstart.md) (Windows: `setup.bat` / `open-photoshop.bat`; Mac: `setup.command` / `open-photoshop.command`).
+
+You need Node.js LTS, Photoshop 2023+, and Adobe UXP Developer Tools. No manual `npm` commands required if you use the launchers.
+
 ## Human input surface
 
 Edit **Hotel 1** on the live calendar (gid `690745977`): Title, Copy, Preview, BG, dates.
@@ -32,6 +38,7 @@ See [e2e-smoke-checklist.md](./e2e-smoke-checklist.md).
 
 ## Key docs
 
+- [quickstart.md](./quickstart.md)
 - [hotel1-column-map.md](./hotel1-column-map.md)
 - [layout-schema.md](./layout-schema.md)
 - [property-registry.md](./property-registry.md)
