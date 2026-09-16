@@ -1,0 +1,5 @@
+OK fixtures/templater/templates/tpl_4x5.psd font=81
+OK fixtures/templater/templates/tpl_1x1.psd font=77
+OK fixtures/templater/templates/tpl_9x16.psd font=81
+OK fixtures/templater/templates/tpl_16x9.psd font=100
+DONE

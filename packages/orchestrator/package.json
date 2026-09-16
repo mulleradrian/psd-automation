@@ -1,0 +1,35 @@
+{
+  "name": "@psd-automation/orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "psd-render": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "render": "tsx src/cli.ts render",
+    "queue": "tsx src/cli.ts queue",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "dependencies": {
+    "@psd-automation/shared": "*",
+    "csv-parse": "^5.6.0",
+    "googleapis": "^146.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

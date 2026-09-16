@@ -1,0 +1,4 @@
+Preview-matched layout library
+Baseline Q1_W1_01_baseline.jpg = cropped Google Sheet Preview column
+Variations = BG plates + masked white ten PNG + bottom title + lime accents
+PerfectTen wordmark logos intentionally NOT used (not in Preview)

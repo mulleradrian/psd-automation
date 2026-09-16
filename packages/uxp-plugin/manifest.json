@@ -1,0 +1,33 @@
+{
+  "id": "com.psdautomation.renderer",
+  "name": "P10 Templater",
+  "version": "0.2.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "24.2.0"
+    }
+  ],
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "com.psdautomation.renderer.panel",
+      "label": {
+        "default": "P10 Templater"
+      },
+      "minimumSize": { "width": 300, "height": 420 },
+      "maximumSize": { "width": 2000, "height": 2000 },
+      "preferredDockedSize": { "width": 320, "height": 520 },
+      "preferredFloatingSize": { "width": 340, "height": 560 }
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "clipboard": "readAndWrite",
+    "network": {
+      "domains": "all"
+    }
+  }
+}

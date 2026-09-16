@@ -1,0 +1,4 @@
+Property,color_bg,color_accent,color_type,font_headline,font_body,logo_file_id,logo_filename,default_template_4x5,default_template_1x1,default_template_9x16,default_template_16x9
+hotel_1,#F5F0E8,#1A1A1A,#111111,MyriadPro-Bold,MyriadPro-Regular,,logo.png,tpl_ig_4x5,tpl_ig_1x1,tpl_story_9x16,tpl_cover_16x9
+tsuen_wan,#0B1F2A,#C4A35A,#FFFFFF,MyriadPro-Bold,MyriadPro-Regular,,logo.png,tpl_ig_4x5,tpl_ig_1x1,tpl_story_9x16,tpl_cover_16x9
+singapore,#102A43,#F0B429,#FFFFFF,MyriadPro-Bold,MyriadPro-Regular,,logo.png,tpl_ig_4x5,tpl_ig_1x1,tpl_story_9x16,tpl_cover_16x9

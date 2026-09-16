@@ -1,0 +1,2 @@
+picked=Perfect-Ten-Logo-light-blue
+out=C:\Users\amull\Documents\des\psd-automation\fixtures\layout-library\assets\ten_from_logo.png

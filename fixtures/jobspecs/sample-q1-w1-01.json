@@ -1,0 +1,42 @@
+{
+  "jobId": "job_sample_4x5",
+  "contentId": "Q1_W1_01",
+  "property": "hotel_1",
+  "templateId": "tpl_ig_4x5",
+  "workingSetPath": "./fixtures/workingsets/1.1.26",
+  "templatePath": "./fixtures/templates/tpl_ig_4x5.psd",
+  "worker": "uxp",
+  "edits": [
+    {
+      "layer": "txt/headline",
+      "op": "setText",
+      "value": "Unlock the peace you deserve"
+    },
+    {
+      "layer": "clr/accent",
+      "op": "setFill",
+      "hex": "#1A1A1A"
+    },
+    {
+      "layer": "txt/headline",
+      "op": "setFont",
+      "postScript": "MyriadPro-Bold",
+      "minSizePx": 18
+    },
+    {
+      "layer": "slot/hero",
+      "op": "replaceSmartObject",
+      "file": "hero.jpg",
+      "transformMode": "contain"
+    }
+  ],
+  "exports": [
+    {
+      "ratio": "4:5",
+      "format": "jpg",
+      "quality": 12,
+      "subdir": "4x5_1.1.26",
+      "filename": "Q1_W1_01_4x5.jpg"
+    }
+  ]
+}

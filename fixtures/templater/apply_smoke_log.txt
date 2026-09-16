@@ -1,0 +1,5 @@
+smoke_4x5.jpg ten=[40,40,940,753] canvas=1080x1350
+smoke_1x1.jpg ten=[40,40,872,700] canvas=1080x1080
+smoke_9x16.jpg ten=[40,40,940,753] canvas=1080x1920
+smoke_16x9.jpg ten=[71,71,868,703] canvas=1920x1080
+DONE

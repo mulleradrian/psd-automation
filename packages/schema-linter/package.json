@@ -1,0 +1,25 @@
+{
+  "name": "@psd-automation/schema-linter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "psd-lint": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint-schema": "tsx src/cli.ts",
+    "write-samples": "tsx src/write-sample-templates.ts",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "dependencies": {
+    "@psd-automation/shared": "*",
+    "ag-psd": "^28.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,287 @@
+/**
+ * Google Apps Script — attach to the Social Media Content Calendar spreadsheet.
+ *
+ * Install:
+ * 1. Extensions → Apps Script
+ * 2. Paste this file
+ * 3. Reload the spreadsheet — menu "PSD Automation" appears
+ *
+ * The menu only writes Jobs rows (Queued). A Windows tray/CLI on the render PC
+ * polls Jobs / local queue and drives Photoshop. Apps Script cannot talk to Photoshop.
+ */
+
+var MACHINE_TABS = [
+  "Content_DB",
+  "Brand_Kits",
+  "Templates",
+  "Layer_Bindings",
+  "Jobs",
+];
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("PSD Automation")
+    .addItem("Ensure machine tabs", "ensureMachineTabs")
+    .addItem("Queue selected Content_IDs", "queueSelectedContentIds")
+    .addItem("Queue all Approved rows", "queueApproved")
+    .addItem("Queue Approved for this week", "queueApprovedThisWeek")
+    .addSeparator()
+    .addItem("Seed sample Q1_W1_01", "seedSampleRow")
+    .addToUi();
+}
+
+function ensureMachineTabs() {
+  var ss = SpreadsheetApp.getActive();
+  var headers = {
+    Content_DB: [
+      "Content_ID",
+      "Property",
+      "Publish_Date",
+      "Title",
+      "Copy",
+      "Copy_ZH",
+      "Hashtags",
+      "Platforms",
+      "Ratios",
+      "Template_ID",
+      "WorkingSet_Folder_ID",
+      "WorkingSet_Path",
+      "Hero_File",
+      "Bg_File",
+      "Content_Group_ID",
+      "Status",
+      "Preview_URL",
+      "Render_Error",
+    ],
+    Brand_Kits: [
+      "Property",
+      "color_bg",
+      "color_accent",
+      "color_type",
+      "font_headline",
+      "font_body",
+      "logo_file_id",
+      "logo_filename",
+      "default_template_4x5",
+      "default_template_1x1",
+      "default_template_9x16",
+      "default_template_16x9",
+    ],
+    Templates: [
+      "Template_ID",
+      "Master_PSD_Drive_ID",
+      "Master_PSD_Path",
+      "Ratio",
+      "Artboard",
+      "Photoshop_Min_Version",
+    ],
+    Layer_Bindings: ["Template_ID", "layer_name", "kind", "field"],
+    Jobs: [
+      "Job_ID",
+      "Content_ID",
+      "Requested_By",
+      "Status",
+      "Worker",
+      "Parent_Job_ID",
+      "Template_ID",
+      "Ratio",
+      "Created_At",
+      "Updated_At",
+      "Output_Links",
+      "Error",
+    ],
+  };
+
+  MACHINE_TABS.forEach(function (name) {
+    var sheet = ss.getSheetByName(name);
+    if (!sheet) {
+      sheet = ss.insertSheet(name);
+      sheet.appendRow(headers[name]);
+      sheet.setFrozenRows(1);
+    } else if (sheet.getLastRow() === 0) {
+      sheet.appendRow(headers[name]);
+      sheet.setFrozenRows(1);
+    }
+  });
+  SpreadsheetApp.getUi().alert("Machine tabs ready: " + MACHINE_TABS.join(", "));
+}
+
+function getSheetOrThrow(name) {
+  var sheet = SpreadsheetApp.getActive().getSheetByName(name);
+  if (!sheet) {
+    throw new Error("Missing tab " + name + " — run Ensure machine tabs first");
+  }
+  return sheet;
+}
+
+function sheetToObjects(sheet) {
+  var values = sheet.getDataRange().getValues();
+  if (values.length < 2) return [];
+  var header = values[0];
+  var rows = [];
+  for (var i = 1; i < values.length; i++) {
+    var obj = {};
+    for (var c = 0; c < header.length; c++) {
+      obj[header[c]] = values[i][c];
+    }
+    if (obj.Content_ID || obj.Property || obj.Template_ID || obj.Job_ID) {
+      rows.push(obj);
+    }
+  }
+  return rows;
+}
+
+function appendJob(contentId, worker, ratio, parentId) {
+  var jobs = getSheetOrThrow("Jobs");
+  var now = new Date().toISOString();
+  var jobId = "job_" + Utilities.getUuid().slice(0, 8) + "_" + String(ratio).replace(":", "x");
+  jobs.appendRow([
+    jobId,
+    contentId,
+    Session.getActiveUser().getEmail(),
+    "Queued",
+    worker || "uxp",
+    parentId || jobId,
+    "",
+    ratio || "",
+    now,
+    now,
+    "",
+    "",
+  ]);
+  return jobId;
+}
+
+function queueContentIds(ids, worker) {
+  ensureMachineTabs();
+  var contentSheet = getSheetOrThrow("Content_DB");
+  var rows = sheetToObjects(contentSheet);
+  var queued = 0;
+  ids.forEach(function (id) {
+    var row = null;
+    for (var i = 0; i < rows.length; i++) {
+      if (String(rows[i].Content_ID) === String(id)) {
+        row = rows[i];
+        break;
+      }
+    }
+    if (!row) return;
+    var parentId = "job_" + Utilities.getUuid().slice(0, 8);
+    var ratios = String(row.Ratios || "4:5")
+      .split(/[,;]/)
+      .map(function (r) {
+        return r.trim();
+      })
+      .filter(Boolean);
+    ratios.forEach(function (ratio) {
+      appendJob(id, worker || "uxp", ratio, parentId);
+      queued++;
+    });
+  });
+  SpreadsheetApp.getUi().alert("Queued " + queued + " job row(s). Tray will pick them up.");
+}
+
+function queueSelectedContentIds() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  if (sheet.getName() !== "Content_DB") {
+    SpreadsheetApp.getUi().alert("Select rows on the Content_DB tab");
+    return;
+  }
+  var range = sheet.getActiveRange();
+  var values = range.getValues();
+  var header = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var idCol = header.indexOf("Content_ID");
+  if (idCol < 0) {
+    SpreadsheetApp.getUi().alert("Content_ID column missing");
+    return;
+  }
+  var ids = [];
+  values.forEach(function (row) {
+    if (row[idCol]) ids.push(String(row[idCol]));
+  });
+  queueContentIds(ids, "uxp");
+}
+
+function queueApproved() {
+  ensureMachineTabs();
+  var rows = sheetToObjects(getSheetOrThrow("Content_DB"));
+  var ids = rows
+    .filter(function (r) {
+      return String(r.Status).toLowerCase() === "approved";
+    })
+    .map(function (r) {
+      return String(r.Content_ID);
+    });
+  queueContentIds(ids, "uxp");
+}
+
+function queueApprovedThisWeek() {
+  ensureMachineTabs();
+  var rows = sheetToObjects(getSheetOrThrow("Content_DB"));
+  var now = new Date();
+  var start = new Date(now);
+  start.setDate(now.getDate() - now.getDay());
+  var ids = rows
+    .filter(function (r) {
+      if (String(r.Status).toLowerCase() !== "approved") return false;
+      var d = new Date(r.Publish_Date);
+      if (isNaN(d.getTime())) return true;
+      return d >= start;
+    })
+    .map(function (r) {
+      return String(r.Content_ID);
+    });
+  queueContentIds(ids, "uxp");
+}
+
+function seedSampleRow() {
+  ensureMachineTabs();
+  var content = getSheetOrThrow("Content_DB");
+  var existing = sheetToObjects(content);
+  for (var i = 0; i < existing.length; i++) {
+    if (existing[i].Content_ID === "Q1_W1_01") {
+      SpreadsheetApp.getUi().alert("Q1_W1_01 already present");
+      return;
+    }
+  }
+  content.appendRow([
+    "Q1_W1_01",
+    "hotel_1",
+    "1.1.26",
+    "Unlock the peace you deserve",
+    "Find calm in every stay.",
+    "在每一次住宿中找到平静。",
+    "#peace #stay #hotel",
+    "Instagram,TikTok,Facebook,Red Book",
+    "4:5,1:1",
+    "",
+    "1IjyC-xQ1-1ctnDCE2TGUzJJsl0Xs-JPG",
+    "",
+    "hero.jpg",
+    "bg.jpg",
+    "",
+    "Approved",
+    "",
+    "",
+  ]);
+
+  var brands = getSheetOrThrow("Brand_Kits");
+  if (brands.getLastRow() < 2) {
+    brands.appendRow([
+      "hotel_1",
+      "#F5F0E8",
+      "#1A1A1A",
+      "#111111",
+      "MyriadPro-Bold",
+      "MyriadPro-Regular",
+      "",
+      "logo.png",
+      "tpl_ig_4x5",
+      "tpl_ig_1x1",
+      "tpl_story_9x16",
+      "tpl_cover_16x9",
+    ]);
+  }
+
+  SpreadsheetApp.getUi().alert("Seeded Q1_W1_01 + Brand_Kits sample");
+}

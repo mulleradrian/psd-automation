@@ -1,0 +1,9 @@
+{
+  "name": "@psd-automation/uxp-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Photoshop UXP panel — load this folder via UXP Developer Tools",
+  "scripts": {
+    "pack": "echo Load packages/uxp-plugin in UXP Developer Tool"
+  }
+}

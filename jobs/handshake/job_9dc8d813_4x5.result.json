@@ -1,0 +1,8 @@
+﻿{
+  "jobId": "job_9dc8d813_4x5",
+  "status": "Rendered",
+  "outputPaths": ["C:\\Users\\amull\\Documents\\des\\psd-automation\\fixtures\\workingsets\\1.1.26\\4x5_1.1.26\\Q1_W1_01_4x5.jpg"],
+  "previewUrl": "file://C:\\Users\\amull\\Documents\\des\\psd-automation\\fixtures\\workingsets\\1.1.26\\4x5_1.1.26\\Q1_W1_01_4x5.jpg",
+  "finishedAt": "2026-09-13T10:36:42.000Z",
+  "notes": "jsx-apply on p10test.psd (schema layers + export)"
+}

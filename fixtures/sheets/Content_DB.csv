@@ -1,0 +1,9 @@
+Content_ID,Property,Publish_Date,Title,Copy,Copy_ZH,Hashtags,Platforms,Ratios,Template_ID,WorkingSet_Folder_ID,WorkingSet_Path,Hero_File,Bg_File,Content_Group_ID,Status,Preview_URL,Render_Error
+Q1_W1_01_4x5,hotel_1,1.1.26,Unlock the peace you deserve,,,,"#peace #stay #hotel","Instagram,TikTok",4:5,,"","./fixtures/workingsets/1.1.26",hero.jpg,9,Q1_W1_01,Approved,,
+Q1_W1_01_1x1,hotel_1,1.1.26,Unlock the peace you deserve,,,,"#peace #stay #hotel","Instagram,TikTok",1:1,,"","./fixtures/workingsets/1.1.26",hero.jpg,9,Q1_W1_01,Approved,,
+Q1_W1_02_4x5,hotel_1,2.1.26,Morning light awaits,,,,"#morning #hotel",Instagram,4:5,,"","./fixtures/workingsets/1.1.26",hero.jpg,10,Q1_W1_02,Approved,,
+Q1_W1_02_1x1,hotel_1,2.1.26,Morning light awaits,,,,"#morning #hotel",Instagram,1:1,,"","./fixtures/workingsets/1.1.26",hero.jpg,10,Q1_W1_02,Approved,,
+Q1_W1_03_4x5,hotel_1,3.1.26,Find calm in every stay,,,,"#calm #hotel",Instagram,4:5,,"","./fixtures/workingsets/1.1.26",hero.jpg,11,Q1_W1_03,Approved,,
+Q1_W1_03_9x16,hotel_1,3.1.26,Find calm in every stay,,,,"#calm #hotel",Instagram,9:16,,"","./fixtures/workingsets/1.1.26",hero.jpg,11,Q1_W1_03,Approved,,
+Q1_W1_04_4x5,hotel_1,4.1.26,The neighbourhood knows,Find calm here.,,,"#neighbourhood #hotel",Instagram,4:5,,"","./fixtures/workingsets/1.1.26",hero.jpg,12,Q1_W1_04,Approved,,
+Q1_W1_04_1x1,hotel_1,4.1.26,The neighbourhood knows,Find calm here.,,,"#neighbourhood #hotel",Instagram,1:1,,"","./fixtures/workingsets/1.1.26",hero.jpg,12,Q1_W1_04,Approved,,

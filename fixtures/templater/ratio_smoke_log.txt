@@ -1,0 +1,35 @@
+fixtures/templater/templates/tpl_4x5.psd
+  SIZE OK 1080x1350
+  OK txt/headline
+  OK txt/sub
+  OK BG IMAGES
+  OK lock/accent_dot
+  OK lock/accent_rule
+  OK slot/ten
+fixtures/templater/templates/tpl_1x1.psd
+  SIZE OK 1080x1080
+  OK txt/headline
+  OK txt/sub
+  OK BG IMAGES
+  OK lock/accent_dot
+  OK lock/accent_rule
+  OK slot/ten
+fixtures/templater/templates/tpl_9x16.psd
+  SIZE OK 1080x1920
+  OK txt/headline
+  OK txt/sub
+  OK BG IMAGES
+  OK lock/accent_dot
+  OK lock/accent_rule
+  OK slot/ten
+fixtures/templater/templates/tpl_16x9.psd
+  SIZE OK 1920x1080
+  OK txt/headline
+  OK txt/sub
+  OK BG IMAGES
+  OK lock/accent_dot
+  OK lock/accent_rule
+  OK slot/ten
+SOFT OK P10 COLORS
+SOFT OK BG GRAPHICS
+DONE

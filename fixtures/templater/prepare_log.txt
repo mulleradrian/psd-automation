@@ -1,0 +1,4 @@
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_4x5.psd
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_1x1.psd
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_9x16.psd
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_16x9.psd

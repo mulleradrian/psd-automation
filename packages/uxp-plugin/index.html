@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>P10 Templater</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hdr">
+        <div class="brand">P10 Templater</div>
+        <div id="projectPath" class="path">No repo folder (sheet-only OK)</div>
+      </header>
+
+      <section class="card">
+        <div class="label">Content</div>
+        <div class="actions">
+          <button id="applyBtn" type="button" class="cta">Apply row</button>
+          <button id="applyNextBtn" type="button">Apply+Next</button>
+          <button id="exportBtn" type="button">Export</button>
+          <button id="renderAllBtn" type="button">All</button>
+        </div>
+        <div class="row">
+          <button id="setProjectBtn" type="button" title="Optional — templates, layouts, export">
+            Repo folder…
+          </button>
+          <button id="reloadBtn" type="button">Reload cache</button>
+          <label class="radio"><input id="autoLoadChk" type="checkbox" checked /> Auto</label>
+          <label class="radio"><input id="autoTextChk" type="checkbox" checked /> AutoFit</label>
+        </div>
+        <div class="hint">Rows come from Pull Content_DB. Repo folder only for PSD templates / Save / export.</div>
+      </section>
+
+      <section class="card">
+        <div class="label">Sheet · Hotel 1 hybrid</div>
+        <input
+          id="sheetUrlInput"
+          class="sheet-url"
+          type="text"
+          placeholder="Paste Sheet URL or ID (Content_DB)"
+          title="Live calendar — Pull reads Content_DB after Hotel 1 sync"
+        />
+        <div class="row">
+          <button id="linkSheetBtn" type="button">Link sheet</button>
+          <button id="pullSheetBtn" type="button" class="cta-soft">Pull Content_DB</button>
+          <button id="openSheetBtn" type="button">Open sheet</button>
+          <button id="openHotel1Btn" type="button">Open Hotel 1</button>
+        </div>
+        <div id="sheetStatus" class="sheet-status">
+          Edit Hotel 1 → Apps Script Sync → Pull Content_DB
+        </div>
+        <div id="hotel1SyncStatus" class="sheet-status muted">
+          Sync Hotel 1 from Sheets menu (PSD Automation)
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Variant</div>
+        <div class="row navrow">
+          <button id="prevBtn" type="button" class="nav">◀</button>
+          <div class="meta">
+            <div id="rowCounter" class="counter">0/0</div>
+            <div id="rowId" class="id">—</div>
+          </div>
+          <button id="nextBtn" type="button" class="nav">▶</button>
+          <input id="jumpInput" class="jump" type="text" value="1" title="Jump" />
+          <button id="jumpBtn" type="button">Go</button>
+        </div>
+        <div id="summary" class="summary">—</div>
+      </section>
+
+      <section class="card">
+        <div class="label">Type</div>
+        <div class="row">
+          <select id="fontSelect" class="select" title="Font">
+            <option value="Poppins-Medium">Poppins Med</option>
+            <option value="Poppins-SemiBold">Poppins SB</option>
+            <option value="Poppins-Regular">Poppins Reg</option>
+            <option value="Inter-Medium">Inter Med</option>
+            <option value="Inter-SemiBold">Inter SB</option>
+            <option value="Inter-Regular">Inter Reg</option>
+            <option value="ArialMT">Arial</option>
+          </select>
+          <button id="sizeDownBtn" type="button" title="Smaller (live)">−</button>
+          <input id="fontSizeInput" class="jump" type="text" value="86" title="Size px — Enter for live apply" />
+          <button id="sizeUpBtn" type="button" title="Larger (live)">+</button>
+        </div>
+        <div class="row">
+          <label class="radio"><input type="radio" name="fontScope" value="row" checked /> This variant</label>
+          <label class="radio"><input type="radio" name="fontScope" value="all" /> All linked</label>
+          <button id="applyFontBtn" type="button" class="cta-soft">Live size</button>
+          <button id="applyFontNowBtn" type="button">Apply wrap</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Layers</div>
+        <div class="row">
+          <button id="scanBtn" type="button" class="cta-soft">Scan PSD</button>
+          <select id="layerFilter" class="select" title="Filter">
+            <option value="all">All</option>
+            <option value="editable">Editable</option>
+            <option value="bound">Bound</option>
+            <option value="locked">Locked</option>
+          </select>
+          <button id="usePsSelBtn" type="button" title="Use Photoshop selection">PS sel</button>
+          <button id="expandAllBtn" type="button">Expand</button>
+        </div>
+        <div id="layerList" class="layer-list">Loading…</div>
+        <div class="row">
+          <select id="addPropSelect" class="select" title="Add property">
+            <option value="">— bind prop —</option>
+          </select>
+          <button id="addPropBtn" type="button">Bind prop</button>
+        </div>
+        <div class="row nudge">
+          <select id="layerSelect" class="select wide" title="Nudge target" hidden>
+            <option value="">— layer —</option>
+          </select>
+          <button id="nudgeLeftBtn" type="button">←</button>
+          <button id="nudgeRightBtn" type="button">→</button>
+          <button id="nudgeUpBtn" type="button">↑</button>
+          <button id="nudgeDownBtn" type="button">↓</button>
+          <button id="laySizeDownBtn" type="button">Sz−</button>
+          <button id="laySizeUpBtn" type="button">Sz+</button>
+        </div>
+        <div class="row">
+          <label class="radio"><input type="radio" name="nudgeStep" value="1" checked /> 1</label>
+          <label class="radio"><input type="radio" name="nudgeStep" value="10" /> 10</label>
+          <label class="radio"><input type="radio" name="nudgeStep" value="25" /> 25</label>
+          <button id="lockLayerBtn" type="button">Toggle lock</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Save</div>
+        <div class="row">
+          <select id="propagateScope" class="select wide" title="Where layout writes">
+            <option value="variant">This variant</option>
+            <option value="content">This Content_ID (all ratios)</option>
+            <option value="ratio" selected>This ratio (all variants)</option>
+            <option value="all">All linked variants</option>
+          </select>
+        </div>
+        <div class="row">
+          <button id="saveLayoutBtn" type="button" class="cta-soft">Save</button>
+        </div>
+        <div class="hint">
+          Scope = where · layer checks = sparse write · “push binding” ticks = update sheet CSVs
+        </div>
+      </section>
+
+      <section class="card" id="propsCard" hidden>
+        <div class="label">Editable props (legacy)</div>
+        <div id="propsBox" class="props"></div>
+      </section>
+
+      <div id="status" class="status">
+        Pull Content_DB → Apply. Repo folder optional (templates / Save / export).
+      </div>
+    </div>
+    <script src="text-fit.js"></script>
+    <script src="layout-helpers.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

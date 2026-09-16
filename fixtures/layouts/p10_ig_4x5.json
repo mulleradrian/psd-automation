@@ -1,0 +1,37 @@
+{
+  "id": "p10_ig_4x5",
+  "name": "Perfect Ten — IG 4:5 (Sheet Preview matched)",
+  "version": 4,
+  "canvas": { "width": 1080, "height": 1350 },
+  "sheetPreview": {
+    "contentId": "Q1_W1_01",
+    "source": "Hotel 1 Preview column",
+    "reference": "fixtures/references/Q1_W1_01_preview_clean.png",
+    "baselineExport": "fixtures/layout-library/p10_ig_4x5/Q1_W1_01_baseline.jpg"
+  },
+  "layout": {
+    "photo": "full-bleed cover",
+    "ten": {
+      "asset": "fixtures/layout-library/assets/ten_logo_crop.png",
+      "color": "#FFFFFF",
+      "depthMask": "soft punch lower-center + bottom so photo reads in front of strokes",
+      "notes": "Do NOT use P10 COLORS PerfectTen wordmark layers — they are not in the Preview"
+    },
+    "type": {
+      "line1": { "field": "Title part 1", "example": "Unlock the peace", "y": 1125, "sizePx": 44, "color": "#FFFFFF", "align": "center" },
+      "line2": { "field": "Title part 2", "example": "you deserve", "y": 1190, "sizePx": 44, "color": "#FFFFFF", "align": "center" },
+      "accentDot": { "color": "#B6F25C", "placement": "left of line1" },
+      "accentRule": { "color": "#B6F25C", "placement": "underline line2" }
+    },
+    "forbidden": [
+      "PerfectTen wordmark logo overlays",
+      "Stacked mid-frame headline/sub/cta over faces",
+      "Showing multiple BG IMAGES or P10 COLORS at once"
+    ]
+  },
+  "build": {
+    "cropPreview": "python scripts/crop_preview_ref.py",
+    "exportPlates": "Photoshop COM → scripts/export-bg-plates.jsx",
+    "compose": "python scripts/compose_preview_layout.py"
+  }
+}

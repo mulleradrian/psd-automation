@@ -1,0 +1,5 @@
+Template_ID,Master_PSD_Drive_ID,Master_PSD_Path,Ratio,Artboard,Photoshop_Min_Version
+tpl_ig_4x5,1xY8eR34iG6FrLLMDwg2hBuf-rM1EzIq6,./fixtures/templates/p10test/tpl_p10_preview_matched.psd,4:5,,24.2
+tpl_ig_1x1,,./fixtures/templates/p10test/p10test_1x1.psd,1:1,,24.2
+tpl_story_9x16,,./fixtures/templates/p10test/p10test_9x16.psd,9:16,,24.2
+tpl_cover_16x9,,./fixtures/templates/p10test/p10test_16x9.psd,16:9,,24.2

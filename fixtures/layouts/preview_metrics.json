@@ -1,0 +1,28 @@
+{
+  "font": "Poppins-Medium",
+  "font_file": "C:\\Windows\\Fonts\\Poppins-Medium.ttf",
+  "font_ps": "Poppins-Medium",
+  "font_size": 86,
+  "text_left": 108,
+  "line1_y": 990,
+  "line2_y": 1135,
+  "bar": [
+    235,
+    82,
+    277,
+    738
+  ],
+  "dot": [
+    187,
+    76,
+    215,
+    104
+  ],
+  "zero": {
+    "cx": 657,
+    "cy": 410,
+    "r": 318,
+    "stroke": 34
+  },
+  "accent": "B6F25C"
+}

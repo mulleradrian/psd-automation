@@ -1,0 +1,19 @@
+# PSD Automation — Machine Tabs seed
+
+Companion sheet created for Wave 0 (do not replace the live calendar):
+
+https://docs.google.com/spreadsheets/d/1ZZTSega50Hc4lf77Q8dTVKstXP6IjX0NrU5DmtiYh80/edit
+
+To add tabs to the **live** calendar instead:
+
+1. Open https://docs.google.com/spreadsheets/d/1OqyooDCwGJfvtC6QIW18Q2rSvmvfzF_jSWVncoh7dMQ/edit
+2. Paste `sheets/Code.gs` into Apps Script
+3. Run **PSD Automation → Ensure machine tabs**
+4. Import CSV rows from `fixtures/sheets/`
+
+Env for live Sheet reads:
+
+```
+PSD_SHEET_ID=1OqyooDCwGJfvtC6QIW18Q2rSvmvfzF_jSWVncoh7dMQ
+GOOGLE_APPLICATION_CREDENTIALS=path\to\service-account.json
+```

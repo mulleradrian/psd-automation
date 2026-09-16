@@ -1,0 +1,64 @@
+V01_4x5_bg9_peace	4:5	bg9	Unlock the peace you deserve
+V02_4x5_bg9_morning	4:5	bg9	Morning light awaits
+V03_4x5_bg9_calm	4:5	bg9	Find calm in every stay
+V04_4x5_bg9_neighbourhood	4:5	bg9	The neighbourhood knows
+V05_4x5_bg10_peace	4:5	bg10	Unlock the peace you deserve
+V06_4x5_bg10_morning	4:5	bg10	Morning light awaits
+V07_4x5_bg10_calm	4:5	bg10	Find calm in every stay
+V08_4x5_bg10_neighbourhood	4:5	bg10	The neighbourhood knows
+V09_4x5_bg11_peace	4:5	bg11	Unlock the peace you deserve
+V10_4x5_bg11_morning	4:5	bg11	Morning light awaits
+V11_4x5_bg11_calm	4:5	bg11	Find calm in every stay
+V12_4x5_bg11_neighbourhood	4:5	bg11	The neighbourhood knows
+V13_4x5_bg12_peace	4:5	bg12	Unlock the peace you deserve
+V14_4x5_bg12_morning	4:5	bg12	Morning light awaits
+V15_4x5_bg12_calm	4:5	bg12	Find calm in every stay
+V16_4x5_bg12_neighbourhood	4:5	bg12	The neighbourhood knows
+V17_1x1_bg9_peace	1:1	bg9	Unlock the peace you deserve
+V18_1x1_bg9_morning	1:1	bg9	Morning light awaits
+V19_1x1_bg9_calm	1:1	bg9	Find calm in every stay
+V20_1x1_bg9_neighbourhood	1:1	bg9	The neighbourhood knows
+V21_1x1_bg10_peace	1:1	bg10	Unlock the peace you deserve
+V22_1x1_bg10_morning	1:1	bg10	Morning light awaits
+V23_1x1_bg10_calm	1:1	bg10	Find calm in every stay
+V24_1x1_bg10_neighbourhood	1:1	bg10	The neighbourhood knows
+V25_1x1_bg11_peace	1:1	bg11	Unlock the peace you deserve
+V26_1x1_bg11_morning	1:1	bg11	Morning light awaits
+V27_1x1_bg11_calm	1:1	bg11	Find calm in every stay
+V28_1x1_bg11_neighbourhood	1:1	bg11	The neighbourhood knows
+V29_1x1_bg12_peace	1:1	bg12	Unlock the peace you deserve
+V30_1x1_bg12_morning	1:1	bg12	Morning light awaits
+V31_1x1_bg12_calm	1:1	bg12	Find calm in every stay
+V32_1x1_bg12_neighbourhood	1:1	bg12	The neighbourhood knows
+V33_9x16_bg9_peace	9:16	bg9	Unlock the peace you deserve
+V34_9x16_bg9_morning	9:16	bg9	Morning light awaits
+V35_9x16_bg9_calm	9:16	bg9	Find calm in every stay
+V36_9x16_bg9_neighbourhood	9:16	bg9	The neighbourhood knows
+V37_9x16_bg10_peace	9:16	bg10	Unlock the peace you deserve
+V38_9x16_bg10_morning	9:16	bg10	Morning light awaits
+V39_9x16_bg10_calm	9:16	bg10	Find calm in every stay
+V40_9x16_bg10_neighbourhood	9:16	bg10	The neighbourhood knows
+V41_9x16_bg11_peace	9:16	bg11	Unlock the peace you deserve
+V42_9x16_bg11_morning	9:16	bg11	Morning light awaits
+V43_9x16_bg11_calm	9:16	bg11	Find calm in every stay
+V44_9x16_bg11_neighbourhood	9:16	bg11	The neighbourhood knows
+V45_9x16_bg12_peace	9:16	bg12	Unlock the peace you deserve
+V46_9x16_bg12_morning	9:16	bg12	Morning light awaits
+V47_9x16_bg12_calm	9:16	bg12	Find calm in every stay
+V48_9x16_bg12_neighbourhood	9:16	bg12	The neighbourhood knows
+V49_16x9_bg9_peace	16:9	bg9	Unlock the peace you deserve
+V50_16x9_bg9_morning	16:9	bg9	Morning light awaits
+V51_16x9_bg9_calm	16:9	bg9	Find calm in every stay
+V52_16x9_bg9_neighbourhood	16:9	bg9	The neighbourhood knows
+V53_16x9_bg10_peace	16:9	bg10	Unlock the peace you deserve
+V54_16x9_bg10_morning	16:9	bg10	Morning light awaits
+V55_16x9_bg10_calm	16:9	bg10	Find calm in every stay
+V56_16x9_bg10_neighbourhood	16:9	bg10	The neighbourhood knows
+V57_16x9_bg11_peace	16:9	bg11	Unlock the peace you deserve
+V58_16x9_bg11_morning	16:9	bg11	Morning light awaits
+V59_16x9_bg11_calm	16:9	bg11	Find calm in every stay
+V60_16x9_bg11_neighbourhood	16:9	bg11	The neighbourhood knows
+V61_16x9_bg12_peace	16:9	bg12	Unlock the peace you deserve
+V62_16x9_bg12_morning	16:9	bg12	Morning light awaits
+V63_16x9_bg12_calm	16:9	bg12	Find calm in every stay
+V64_16x9_bg12_neighbourhood	16:9	bg12	The neighbourhood knows

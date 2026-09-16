@@ -1,0 +1,302 @@
+﻿/**
+ * Perfect Ten IG 4:5 layout library builder
+ *
+ * Problem: p10test.psd stacks ALL BG images + ALL graphics + ALL logos visible.
+ * Fix: exclusive visibility per group, proper text zones, export a variation matrix.
+ *
+ * Layout (matching Hotel 1 row Q1_W1_01 preview composition):
+ *   [photo BG â€” full bleed]
+ *   [graphic "10" frame â€” exclusive]
+ *   [logo / Perfect Ten wordmark â€” exclusive colorway]
+ *   [txt/headline â€” bottom third, centered]
+ *   [txt/sub â€” under headline]
+ *   [txt/cta â€” near bottom]
+ *
+ * Run: Photoshop.exe scripts/build-layout-library.jsx
+ */
+#target photoshop
+app.displayDialogs = DialogModes.NO;
+app.preferences.rulerUnits = Units.PIXELS;
+
+function repoRoot() {
+  return new File($.fileName).parent.parent;
+}
+
+function ensureFolder(path) {
+  var f = new Folder(path);
+  if (!f.exists) f.create();
+  return f;
+}
+
+function findLayer(container, name) {
+  for (var i = 0; i < container.layers.length; i++) {
+    var layer = container.layers[i];
+    if (layer.name === name) return layer;
+    if (layer.typename === "LayerSet") {
+      var found = findLayer(layer, name);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function findGroup(doc, name) {
+  for (var i = 0; i < doc.layerSets.length; i++) {
+    if (doc.layerSets[i].name === name) return doc.layerSets[i];
+  }
+  return null;
+}
+
+function setExclusiveVisible(group, keepName) {
+  if (!group) return;
+  for (var i = 0; i < group.layers.length; i++) {
+    var layer = group.layers[i];
+    // Skip schema alias layers we may add
+    if (String(layer.name).indexOf("slot/") === 0) {
+      layer.visible = false;
+      continue;
+    }
+    layer.visible = layer.name === keepName;
+  }
+}
+
+function hideSchemaJunk(doc) {
+  var junk = ["clr/accent", "txt/headline", "txt/sub", "txt/cta", "slot/hero", "slot/logo"];
+  for (var i = 0; i < junk.length; i++) {
+    var layer = findLayer(doc, junk[i]);
+    if (layer) {
+      try {
+        layer.remove();
+      } catch (e) {
+        layer.visible = false;
+      }
+    }
+  }
+}
+
+function ensureTextLayer(doc, name, contents, sizePt, yPx, colorHex, fontName) {
+  var layer = findLayer(doc, name);
+  if (layer) {
+    try {
+      layer.remove();
+    } catch (e) {}
+  }
+  layer = doc.artLayers.add();
+  layer.kind = LayerKind.TEXT;
+  layer.name = name;
+  var ti = layer.textItem;
+  ti.kind = TextType.PARAGRAPHTEXT;
+  // Box width ~900px centered on 1080 canvas
+  ti.position = [90, yPx];
+  try {
+    ti.width = 900;
+    ti.height = 160;
+  } catch (e2) {}
+  ti.contents = contents;
+  ti.size = sizePt;
+  ti.font = fontName || "ArialMT";
+  ti.justification = Justification.CENTER;
+  var c = new SolidColor();
+  c.rgb.hexValue = colorHex.replace("#", "");
+  ti.color = c;
+  ti.capitalization = TextCase.NORMAL;
+  return layer;
+}
+
+function exportJpg(doc, outFile, quality) {
+  var opts = new JPEGSaveOptions();
+  opts.quality = quality || 10;
+  opts.embedColorProfile = true;
+  opts.formatOptions = FormatOptions.STANDARDBASELINE;
+  doc.saveAs(outFile, opts, true, Extension.LOWERCASE);
+}
+
+function applyVariant(doc, variant) {
+  var bgGroup = findGroup(doc, "BG IMAGES");
+  var gfxGroup = findGroup(doc, "BG GRAPHICS");
+  var logoGroup = findGroup(doc, "P10 COLORS");
+
+  setExclusiveVisible(bgGroup, variant.bg);
+  setExclusiveVisible(gfxGroup, variant.graphic);
+  setExclusiveVisible(logoGroup, variant.logo);
+
+  // Text color follows logo colorway lightly
+  var textHex = variant.textHex || "FFFFFF";
+  ensureTextLayer(doc, "txt/headline", variant.headline, variant.headlineSize || 52, 900, textHex, variant.headlineFont || "Arial-BoldMT");
+  ensureTextLayer(doc, "txt/sub", variant.sub, variant.subSize || 26, 1020, textHex, "ArialMT");
+  ensureTextLayer(doc, "txt/cta", variant.cta, variant.ctaSize || 22, 1185, textHex, "ArialMT");
+}
+
+function main() {
+  var root = repoRoot();
+  var master = new File(root.fsName + "/fixtures/templates/p10test/p10test_clean.psd");
+  if (!master.exists) {
+    master = new File(root.fsName + "/fixtures/templates/p10test/p10test.psd");
+  }
+  if (!master.exists) throw new Error("Missing master PSD");
+
+  var outDir = ensureFolder(root.fsName + "/fixtures/layout-library/p10_ig_4x5");
+  var doc = app.open(master);
+  hideSchemaJunk(doc);
+
+  // --- Catalog (exclusive picks inside each group) ---
+  var BGS = ["9", "10", "11", "12"];
+  var GFX = [
+    "Perfect-Ten-Graphic-01-Dark-Green-BG",
+    "Perfect-Ten-Graphic-02-Brown-BG"
+  ];
+  var LOGOS = [
+    "Perfect-Ten-Logo-dark-green",
+    "Perfect-Ten-Logo-dark-Vitality Green",
+    "Perfect-Ten-Logo-light-blue"
+  ];
+
+  // Baseline = sheet row Q1_W1_01 reconstruction target
+  // Preview composition: bright lobby photo + light-blue 10/wordmark + white type
+  var baseline = {
+    id: "Q1_W1_01_baseline",
+    bg: "11",
+    graphic: "Perfect-Ten-Graphic-01-Dark-Green-BG",
+    logo: "Perfect-Ten-Logo-light-blue",
+    headline: "Unlock the peace\nyou deserve",
+    sub: "Find calm in every stay.",
+    cta: "Book now",
+    textHex: "FFFFFF",
+    headlineSize: 56,
+    subSize: 26,
+    ctaSize: 22
+  };
+
+  var variants = [];
+  variants.push(baseline);
+
+  // BG sweeps (keep baseline graphic/logo/copy)
+  for (var i = 0; i < BGS.length; i++) {
+    if (BGS[i] === baseline.bg) continue;
+    variants.push({
+      id: "var_bg_" + BGS[i],
+      bg: BGS[i],
+      graphic: baseline.graphic,
+      logo: baseline.logo,
+      headline: baseline.headline,
+      sub: baseline.sub,
+      cta: baseline.cta,
+      textHex: baseline.textHex
+    });
+  }
+
+  // Graphic sweeps
+  for (var g = 0; g < GFX.length; g++) {
+    if (GFX[g] === baseline.graphic) continue;
+    variants.push({
+      id: "var_gfx_brown",
+      bg: baseline.bg,
+      graphic: GFX[g],
+      logo: baseline.logo,
+      headline: baseline.headline,
+      sub: baseline.sub,
+      cta: baseline.cta,
+      textHex: baseline.textHex
+    });
+  }
+
+  // Logo / colorway sweeps
+  for (var l = 0; l < LOGOS.length; l++) {
+    if (LOGOS[l] === baseline.logo) continue;
+    var short = LOGOS[l].indexOf("Vitality") >= 0 ? "vitality" : LOGOS[l].indexOf("dark-green") >= 0 ? "darkgreen" : "other";
+    variants.push({
+      id: "var_logo_" + short,
+      bg: baseline.bg,
+      graphic: baseline.graphic,
+      logo: LOGOS[l],
+      headline: baseline.headline,
+      sub: baseline.sub,
+      cta: baseline.cta,
+      textHex: baseline.textHex
+    });
+  }
+
+  // Copy variations (same visual system)
+  var copies = [
+    {
+      id: "var_copy_morning",
+      headline: "Morning light\nawaits",
+      sub: "Start soft. Stay longer.",
+      cta: "Explore stays"
+    },
+    {
+      id: "var_copy_neighbourhood",
+      headline: "The neighbourhood\nknows",
+      sub: "Local gems, curated for you.",
+      cta: "Join Perfect Ten"
+    },
+    {
+      id: "var_copy_zh",
+      headline: "Unlock the peace\nyou deserve",
+      sub: "åœ¨æ¯ä¸€æ¬¡ä½å®¿ä¸­æ‰¾åˆ°å¹³é™ã€‚",
+      cta: "ç«‹å³é¢„è®¢"
+    }
+  ];
+  for (var c = 0; c < copies.length; c++) {
+    variants.push({
+      id: copies[c].id,
+      bg: baseline.bg,
+      graphic: baseline.graphic,
+      logo: baseline.logo,
+      headline: copies[c].headline,
+      sub: copies[c].sub,
+      cta: copies[c].cta,
+      textHex: baseline.textHex
+    });
+  }
+
+  // Combo spotlight: each BG Ã— light-blue logo Ã— dark-green graphic (4 more already partly covered)
+  // Plus one full alt combo
+  variants.push({
+    id: "var_combo_brown_vitality_bg9",
+    bg: "9",
+    graphic: "Perfect-Ten-Graphic-02-Brown-BG",
+    logo: "Perfect-Ten-Logo-dark-Vitality Green",
+    headline: "Stay vibrant.\nStay Perfect Ten.",
+    sub: "Wellness built into every night.",
+    cta: "Learn more",
+    textHex: "FFFFFF"
+  });
+
+  var manifest = [];
+  for (var v = 0; v < variants.length; v++) {
+    var variant = variants[v];
+    applyVariant(doc, variant);
+    var out = new File(outDir.fsName + "/" + variant.id + ".jpg");
+    exportJpg(doc, out, 10);
+    manifest.push(variant.id + " | bg=" + variant.bg + " | gfx=" + variant.graphic + " | logo=" + variant.logo);
+    $.writeln("exported " + out.fsName);
+  }
+
+  // Save a schema-ready working template with baseline visible + text layers
+  applyVariant(doc, baseline);
+  var tplOut = new File(root.fsName + "/fixtures/templates/p10test/tpl_p10_ig_4x5_library.psd");
+  var psdOpts = new PhotoshopSaveOptions();
+  psdOpts.embedColorProfile = true;
+  psdOpts.maximizeCompatibility = true;
+  doc.saveAs(tplOut, psdOpts, true, Extension.LOWERCASE);
+
+  // Manifest text
+  var man = new File(outDir.fsName + "/MANIFEST.txt");
+  man.open("w");
+  man.encoding = "UTF-8";
+  man.write("Perfect Ten IG 4:5 layout library\n");
+  man.write("Baseline reconstructs Hotel 1 / Q1_W1_01 preview composition\n\n");
+  for (var m = 0; m < manifest.length; m++) man.write(manifest[m] + "\n");
+  man.close();
+
+  $.writeln("ALERT:"+("Layout library exported " + variants.length + " variants to:\n" + outDir.fsName);
+}
+
+try {
+  main();
+} catch (e) {
+  $.writeln("ALERT:"+("build-layout-library failed:"+e); $.writeln(e);
+  throw e;
+}
+

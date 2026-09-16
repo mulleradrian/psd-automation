@@ -1,0 +1,14 @@
+OPEN master
+SMARTIFY placeholders (slot/*, lock/*)
+SO already slot/ten
+SO already lock/accent_rule
+SO already lock/accent_dot
+CAPTURED 15 layers @ 1080x1350
+SAVED master + layouts/4x5.json
+VARIANT 1x1
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_1x1.psd 1080x1080
+VARIANT 9x16
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_9x16.psd 1080x1920
+VARIANT 16x9
+OK C:\Users\amull\Documents\des\psd-automation\fixtures\templater\templates\tpl_16x9.psd 1920x1080
+DONE

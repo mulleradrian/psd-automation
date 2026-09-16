@@ -1,0 +1,7 @@
+{
+  "contentId": "Q1_W1_01",
+  "ratioKey": "4x5",
+  "updatedAt": "2026-09-15T00:00:00.000Z",
+  "layers": {},
+  "note": "Sparse variant override example — empty layers inherit ratio baseline"
+}
